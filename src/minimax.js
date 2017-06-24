@@ -95,12 +95,23 @@ const heuristic = (state, maximizingPlayer) => {
 
 	//This is how you can retrieve the minimizing player.
     const minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
+		const wtfAreStates = new State().nextStates();
+		console.log('next states')
 
 	//An example.
-    const linesOfLengthTwoForX = state.numLines(2, 'x')
+    const linesOfLengthTwoForX = state.numLines(2, 'x') * 15;
+		const linesOfLengthThreeForX = state.numLines(3, 'x') * 30;
+		const xValue = linesOfLengthThreeForX + linesOfLengthTwoForX;
+
+		const linesOfLengthTwoForO = state.numLines(2, 'o') * 15;
+		const linesOfLengthThreeForO = state.numLines(3, 'o') * 30;
+		const oValue = linesOfLengthThreeForO + linesOfLengthTwoForO;
+		// -100 for minimum 100 for maximum
+		console.log(xValue, oValue)
+		return xValue - oValue;
 
     //Your code here.  Don't return random, obviously.
-	return Math.random()
+	//return Math.random()
 }
 
 
