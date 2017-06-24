@@ -95,20 +95,30 @@ const heuristic = (state, maximizingPlayer) => {
 
 	//This is how you can retrieve the minimizing player.
     const minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
-		const wtfAreStates = new State().nextStates();
-		console.log('next states')
+		//console.log('next states')
 
 	//An example.
     const linesOfLengthTwoForX = state.numLines(2, 'x') * 15;
 		const linesOfLengthThreeForX = state.numLines(3, 'x') * 30;
-		const xValue = linesOfLengthThreeForX + linesOfLengthTwoForX;
+		var xValue = linesOfLengthThreeForX + linesOfLengthTwoForX;
 
 		const linesOfLengthTwoForO = state.numLines(2, 'o') * 15;
 		const linesOfLengthThreeForO = state.numLines(3, 'o') * 30;
-		const oValue = linesOfLengthThreeForO + linesOfLengthTwoForO;
+		var oValue = linesOfLengthThreeForO + linesOfLengthTwoForO;
+
+		const winner = (state.someoneWon()) ? state.winner : false;
+		if (winner) {
+			//(winner === 'x') ? xValue += 100 : -100;
+			if (winner === 'x') {
+				xValue += 100;
+			} else {
+				yValue -= 100;
+			}
+		}
+
+
 		// -100 for minimum 100 for maximum
-		console.log(xValue, oValue)
-		return xValue - oValue;
+		return (maximizingPlayer === 'o') ? (- (xValue - oValue)) : xValue - oValue;
 
     //Your code here.  Don't return random, obviously.
 	//return Math.random()
@@ -138,9 +148,19 @@ to see if you are maximizing or minimizing.
 const minimax = (state, depth, maximizingPlayer) => {
 	var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
 	var possibleStates = state.nextStates();
-	var currentPlayer = state.nextMovePlayer;
+	if (depth === 0) {
+		return heuristic(state, maximizingPlayer);
+	}
+
+	// var possibleWinner = possibleStates.reduce(function(acc, current) {
+	// 	//return acc += heuristics(current, maximizingPlayer);
+	// 	return acc || current.winner
+	// })
+
+	// console.log(avgOfStates);
+	// var currentPlayer = state.nextMovePlayer;
 	//Your code here.
-	return Math.random();
+	//return Math.random();
 }
 
 
